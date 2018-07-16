@@ -31,9 +31,9 @@
         </thead>
         <tbody>
             <tr ng-repeat="item in vm.data.registros">
-                <td>{{item.datalocacao | date : 'dd/MM/yyyy HH:mm'}}</td>
+                <td>{{item.locacao | date : 'dd/MM/yyyy HH:mm'}}</td>             
                 <td>{{item.locatario.nome}}</td>
-                <td class="text-right">{{item.valorTotal | number: 2}}</td>
+                <td class="text-right">{{item.valorLocacao | number: 2}}</td>
                 <td class="text-right">
                     <a ui-sref="locacoesEditar({id: item.id})" class="btn btn-sm btn-link py-0">
                         <span class="feather icon-edit"></span>

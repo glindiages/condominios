@@ -33,11 +33,11 @@
         </thead>
         <tbody>
             <tr ng-repeat="item in vm.data.registros">
-                <td>{{item.codigo}}</td>
+                <td>{{item.codigo}}</td> 
                 <td>{{item.descricao}}</td>
-                <td>{{item.endereço}}</td>
+                <td>{{item.endereco}}</td>
                 <td class="text-right">{{item.preco | number:2}}</td>
-                <td class="text-right">{{item.metragem | number:5}}</td>
+                <td class="text-right">{{item.metragem | number:2}}</td>               
                 <td class="text-right">
                     <a ui-sref="imoveisEditar({id: item.id})" class="btn btn-sm btn-link py-0">
                         <span class="feather icon-edit"></span>

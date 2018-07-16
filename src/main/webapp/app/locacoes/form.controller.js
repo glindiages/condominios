@@ -17,8 +17,8 @@
 
         var vm = this;
         vm.registro = {
-            datalocacao: new Date(),
-            valorTotal: 0,
+            locacao: new Date(),
+            valorLocacao:0,
             itens: []
         };
         vm.error = {};
@@ -80,7 +80,7 @@
 
         function novoItem() {
             vm.itemOriginal = null;
-            vm.registroItem = {};
+            vm.registroItem = {};            
         }
 
         function editarItem(selecionado) {
@@ -90,7 +90,9 @@
 
         function salvarItem() {
             // calcula o total do item
-            vm.registroItem.valorTotal = vm.registroItem.valorItem;
+            if (vm.registro.valorLocacao == 0){
+                vm.registro.valorLocacao = vm.registroItem.imovel.preco;
+            }
 
             var index = vm.registro.itens.indexOf(vm.itemOriginal);
             if (index != -1) {
@@ -99,24 +101,16 @@
                 vm.registro.itens.push(vm.registroItem);
             }
             vm.itemOriginal = null;
-            vm.registroItem = {};
-
-            // calcula o total da locacao
-            vm.registro.valorTotal = 0;
-            vm.registro.itens.forEach(function (item) {
-                vm.registro.valorTotal += item.valorTotal;
-            });
+            vm.registro.valorLocacao += vm.registroItem.valorItem;                  
         }
 
         function excluirItem(selecionado) {
             var index = vm.registro.itens.indexOf(selecionado);
             vm.registro.itens.splice(index, 1);
-
-            // calcula o total da locacao
-            vm.registro.valorTotal = 0;
-            vm.registro.itens.forEach(function (item) {
-                vm.registro.valorTotal += item.valorTotal;
-            });
+            vm.registro.valorLocacao -= selecionado.valorItem;
+            if(vm.registro.itens.length ==0){    
+                vm.registro.valorLocacao = 0;    
+            }
         }
     }
 })();

@@ -4,7 +4,7 @@
 <form>
     <div class="form-row justify-content-end">
         <div class="form-group col-md-3">
-            <label for="locacao">Locação</label>
+            <label for="locacao">Data Locação</label>
             <span readonly class="form-control text-right">&nbsp;{{vm.registro.locacao | date:'dd/MM/yyyy HH:mm'}}</span>
         </div>
         <div class="form-group col-md-3">
@@ -15,8 +15,9 @@
             </small>
         </div>
         <div class="form-group col-md-3">
-            <label for="valorLocacao">Valor da locação</label>
-            <span readonly class="form-control text-right">{{vm.registro.valorLocacao | number:2}}</span>            
+            <label for="valorLocacao">Valor Locação</label>
+            <span readonly class="form-control text-right">&nbsp;{{vm.registro.valorLocacao | number:2}}</span>
+            
         </div>
     </div>
     <div class="form-group">
@@ -39,19 +40,17 @@
     <table class="table table-striped table-sm">
         <thead>
             <tr>
-                <th>Imovel</th>
-                <th>Descrição</th>
+                <th>Imóvel</th>
+                <th> Descrição Item</th>
                 <th class="text-right">Valor</th>
-                <th class="text-right">Total</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="item in vm.registro.itens">
-                <td>{{item.imovel.codigo}}</td>
-                <td>{{item.imovel.descricao}}</td>
+                <td>{{item.imovel.codigo}}-{{item.imovel.descricao}}</td>
+                <td>{{item.descricaoItem}}</td>
                 <td class="text-right">{{item.valorItem | number: 2}}</td>
-                <td class="text-right">{{item.valorTotal | number: 2}}</td>
                 <td class="text-right">
                     <button ng-click="vm.editarItem(item)" data-toggle="modal" data-target="#formItem" class="btn btn-sm btn-link py-0">
                         <span class="feather icon-edit"></span>
@@ -79,20 +78,24 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="imovel">Imóveis</label>
+                    <label for="imovel">Imóvel</label>
                     <select ng-options="item as item.descricao for item in vm.imoveis track by item.id" ng-model="vm.registroItem.imovel" class="form-control"
                         ng-change="vm.registroItem.valorItem = vm.registroItem.imovel.valorLocacao">
                     </select>
                 </div>
                 <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label for="descricaoItem">Descrição Item</label>                        
+                        <input type="text" ng-class="{'is-invalid': vm.error.descricaoItem}" ng-model="vm.registroItem.descricaoItem" class="form-control" id="descricaoItem"
+                            placeholder="Digite a descrição do item">
+                            <small ng-if="vm.error.descricaoItem" class="invalid-feedback">
+                                {{vm.error.descricaoItem[1]}}
+                            </small>
+                    </div>                   
                     <div class="form-group col-md-4">
                         <label for="valorItem">Valor Item</label>
                         <input type="number" ng-model="vm.registroItem.valorItem" class="form-control text-right" id="valorItem">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="valorTotal">Valor Total</label>
-                        <input type="number" disabled ng-model="vm.registroItem.valorTotal" class="form-control text-right" id="valorTotal">
-                    </div>
+                    </div>                    
                 </div>
             </div>
             <div class="modal-footer">

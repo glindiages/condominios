@@ -13,6 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "LOCACOES_ITENS")
@@ -26,8 +27,8 @@ public class LocacaoItem implements Entidade {
     
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "ID_LOCACAO")
-    private Locacao locacao;
+    @JoinColumn(name = "ID_IMOVEL")
+    private Imovel imovel;
     
     @NotNull
     @Digits(integer = 10, fraction = 5)
@@ -35,9 +36,9 @@ public class LocacaoItem implements Entidade {
     private BigDecimal valorItem;
     
     @NotNull
-    @Digits(integer = 10, fraction = 5)
-    @Column(name = "VL_TOTAL", precision = 15, scale = 5)
-    private BigDecimal valorTotal;
+    @Size(max = 255, message = "{LocacaoItem.descricaoitem.Size}")
+    @Column(name = "DESCRICAOITEM", length = 255)
+    private String descricaoItem;
 
     @Override
     public Long getId() {
@@ -48,12 +49,12 @@ public class LocacaoItem implements Entidade {
         this.id = id;
     }
 
-    public Locacao getLocacao() {
-        return locacao;
+    public Imovel getImovel() {
+        return imovel;
     }
 
-    public void setLocaco(Locacao locacao) {
-        this.locacao = locacao;
+    public void setImovel(Imovel imovel) {
+        this.imovel = imovel;
     }
 
     public BigDecimal getValorItem() {
@@ -64,21 +65,21 @@ public class LocacaoItem implements Entidade {
         this.valorItem = valorItem;
     }
 
-    public BigDecimal getValorTotal() {
-        return valorTotal;
+    public String getDescricaoItem() {
+        return descricaoItem;
     }
 
-    public void setValorTotal(BigDecimal valorTotal) {
-        this.valorTotal = valorTotal;
+    public void setDescricaoItem(String descricaoItem) {
+        this.descricaoItem = descricaoItem;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.id);
-        hash = 23 * hash + Objects.hashCode(this.locacao);
-        hash = 23 * hash + Objects.hashCode(this.valorItem);
-        hash = 23 * hash + Objects.hashCode(this.valorTotal);
+        int hash = 5;
+        hash = 89 * hash + Objects.hashCode(this.id);
+        hash = 89 * hash + Objects.hashCode(this.imovel);
+        hash = 89 * hash + Objects.hashCode(this.valorItem);
+        hash = 89 * hash + Objects.hashCode(this.descricaoItem);
         return hash;
     }
 
@@ -94,26 +95,22 @@ public class LocacaoItem implements Entidade {
             return false;
         }
         final LocacaoItem other = (LocacaoItem) obj;
+        if (!Objects.equals(this.descricaoItem, other.descricaoItem)) {
+            return false;
+        }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.locacao, other.locacao)) {
+        if (!Objects.equals(this.imovel, other.imovel)) {
             return false;
         }
-        if (!Objects.equals(this.valorItem, other.valorItem)) {
-            return false;
-        }
-        
-        if (!Objects.equals(this.valorTotal, other.valorTotal)) {
-            return false;
-        }
-        return true;
+           
+        return Objects.equals(this.valorItem, other.valorItem);
     }
 
     @Override
     public String toString() {
-        return "PedidoItem{" + "id=" + id + ", locacao=" + locacao + ", valorItem=" + valorItem + ", valorTotal=" + valorTotal + '}';
+        return "LocacaoItem{" + "id=" + id + ", imovel=" + imovel + ", valorItem=" + valorItem + ", descricaoItem=" + descricaoItem + '}';
     }
-    
 }
 
